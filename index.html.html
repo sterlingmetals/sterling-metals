@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sterling Metals — Stainless Steel, Delhi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --steel-950:#12161a;
+    --steel-900:#1b2126;
+    --steel-800:#252d33;
+    --steel-700:#3a444c;
+    --steel-400:#8a969e;
+    --steel-200:#c9d1d6;
+    --steel-100:#eef1f2;
+    --spark:#f0a83c;
+    --spark-dim:#7a5a24;
+    --radius:2px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--steel-950);
+    color:var(--steel-200);
+    font-family:'IBM Plex Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  ::selection{background:var(--spark); color:var(--steel-950);}
+  a{color:inherit;}
+
+  .diamond-plate{
+    background-image:
+      radial-gradient(circle at 25% 25%, rgba(255,255,255,0.02) 0, rgba(255,255,255,0.02) 1px, transparent 1px),
+      radial-gradient(circle at 75% 75%, rgba(255,255,255,0.02) 0, rgba(255,255,255,0.02) 1px, transparent 1px);
+    background-size:24px 24px;
+  }
+
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:50;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:20px 5vw;
+    background:linear-gradient(180deg, rgba(18,22,26,0.95), rgba(18,22,26,0.75));
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--steel-800);
+  }
+  .brand{
+    font-family:'Oswald', sans-serif;
+    font-weight:600;
+    font-size:1.15rem;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    display:flex; align-items:center; gap:10px;
+  }
+  .brand .mark{
+    width:10px; height:10px; background:var(--spark);
+    clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);
+  }
+  nav{display:flex; gap:32px; font-size:0.82rem; letter-spacing:0.08em; text-transform:uppercase;}
+  nav a{text-decoration:none; color:var(--steel-400); transition:color .2s;}
+  nav a:hover{color:var(--spark);}
+  .nav-toggle{display:none;}
+
+  .hero{
+    min-height:100vh;
+    display:flex; flex-direction:column; justify-content:center;
+    padding:140px 5vw 80px;
+    position:relative;
+    background:
+      linear-gradient(180deg, rgba(18,22,26,0.2), var(--steel-950) 85%),
+      repeating-linear-gradient(115deg, rgba(255,255,255,0.015) 0 2px, transparent 2px 40px);
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    color:var(--spark);
+    font-size:0.78rem;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    margin-bottom:22px;
+    display:flex; align-items:center; gap:12px;
+  }
+  .eyebrow::before{content:''; width:28px; height:1px; background:var(--spark);}
+  h1{
+    font-family:'Oswald', sans-serif;
+    font-weight:700;
+    text-transform:uppercase;
+    font-size:clamp(2.6rem, 7vw, 6.2rem);
+    line-height:0.98;
+    letter-spacing:-0.01em;
+    color:var(--steel-100);
+    max-width:16ch;
+  }
+  h1 .accent{color:var(--spark);}
+  .hero-sub{
+    margin-top:28px;
+    max-width:46ch;
+    font-size:1.05rem;
+    line-height:1.65;
+    color:var(--steel-400);
+  }
+  .hero-cta{
+    margin-top:44px;
+    display:flex; gap:18px; flex-wrap:wrap; align-items:center;
+  }
+  .btn{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.85rem;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    padding:15px 30px;
+    text-decoration:none;
+    border-radius:var(--radius);
+    display:inline-flex; align-items:center; gap:10px;
+    transition:transform .18s ease, background .18s ease;
+  }
+  .btn-primary{background:var(--spark); color:var(--steel-950); font-weight:600;}
+  .btn-primary:hover{transform:translateY(-2px); background:#ffb659;}
+  .btn-ghost{border:1px solid var(--steel-700); color:var(--steel-200);}
+  .btn-ghost:hover{border-color:var(--spark); color:var(--spark);}
+
+  .status-row{
+    margin-top:56px;
+    display:flex; gap:40px; flex-wrap:wrap;
+    padding-top:28px; border-top:1px solid var(--steel-800);
+    max-width:640px;
+  }
+  .status-item{font-family:'IBM Plex Mono', monospace; font-size:0.8rem; color:var(--steel-400);}
+  .status-item strong{display:block; color:var(--steel-100); font-size:1rem; font-family:'IBM Plex Sans'; margin-bottom:4px;}
+  .live-dot{width:7px; height:7px; border-radius:50%; background:#5fd97a; display:inline-block; margin-right:6px; box-shadow:0 0 8px #5fd97a; animation:pulse 2s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;} 50%{opacity:.4;}}
+
+  section{padding:110px 5vw;}
+  .section-head{display:flex; align-items:baseline; gap:16px; margin-bottom:56px;}
+  .section-num{font-family:'IBM Plex Mono', monospace; color:var(--spark); font-size:0.85rem;}
+  .section-title{
+    font-family:'Oswald', sans-serif; text-transform:uppercase;
+    font-size:clamp(1.8rem,3.4vw,2.6rem); color:var(--steel-100); letter-spacing:-0.01em;
+  }
+  .section-line{flex:1; height:1px; background:var(--steel-800);}
+
+  /* ABOUT */
+  .about-wrap{display:grid; grid-template-columns:1.1fr 0.9fr; gap:70px; align-items:start;}
+  .about-wrap p{font-size:1.05rem; line-height:1.85; color:var(--steel-400); margin-bottom:20px;}
+  .about-wrap p strong{color:var(--steel-100); font-weight:500;}
+  .rating-card{
+    background:var(--steel-900); border:1px solid var(--steel-800); border-radius:var(--radius);
+    padding:32px; position:relative; overflow:hidden;
+  }
+  .rating-card::before{content:''; position:absolute; top:0; left:0; width:4px; height:100%; background:var(--spark);}
+  .rating-big{font-family:'Oswald', sans-serif; font-size:3.4rem; color:var(--steel-100); font-weight:700; line-height:1;}
+  .stars{color:var(--spark); font-size:1.2rem; letter-spacing:3px; margin:12px 0;}
+  .rating-card p{color:var(--steel-400); font-size:0.9rem;}
+
+  /* PRODUCTS */
+  .grid-products{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1px; background:var(--steel-800); border:1px solid var(--steel-800);}
+  .product-card{
+    background:var(--steel-950); padding:38px 30px; transition:background .2s;
+    position:relative;
+  }
+  .product-card:hover{background:var(--steel-900);}
+  .product-tag{font-family:'IBM Plex Mono', monospace; font-size:0.72rem; color:var(--spark-dim); letter-spacing:0.1em; text-transform:uppercase;}
+  .product-card h3{
+    font-family:'Oswald', sans-serif; text-transform:uppercase; font-size:1.3rem; color:var(--steel-100);
+    margin:14px 0 12px; font-weight:600;
+  }
+  .product-card p{color:var(--steel-400); font-size:0.92rem; line-height:1.6;}
+  .product-card:hover .product-tag{color:var(--spark);}
+
+  /* PLATE / CONTACT */
+  .plate-section{background:var(--steel-900); border-top:1px solid var(--steel-800); border-bottom:1px solid var(--steel-800);}
+  .plate{
+    background:linear-gradient(155deg, var(--steel-800), var(--steel-900));
+    border:1px solid var(--steel-700);
+    border-radius:6px;
+    padding:52px 56px;
+    max-width:880px;
+    margin:0 auto;
+    position:relative;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,0.04), 0 30px 60px -30px rgba(0,0,0,0.6);
+  }
+  .rivet{position:absolute; width:9px; height:9px; border-radius:50%; background:radial-gradient(circle at 35% 35%, #565f66, #14181b);}
+  .rivet.tl{top:16px; left:16px;} .rivet.tr{top:16px; right:16px;}
+  .rivet.bl{bottom:16px; left:16px;} .rivet.br{bottom:16px; right:16px;}
+  .plate-eyebrow{font-family:'IBM Plex Mono', monospace; font-size:0.75rem; color:var(--spark); letter-spacing:0.16em; text-transform:uppercase; margin-bottom:22px;}
+  .plate-grid{display:grid; grid-template-columns:1fr 1fr; gap:34px 40px;}
+  .plate-item h4{font-family:'IBM Plex Mono', monospace; font-size:0.7rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--steel-400); margin-bottom:8px;}
+  .plate-item div{font-size:1.05rem; color:var(--steel-100); line-height:1.5; font-weight:500;}
+  .plate-item a{text-decoration:none; border-bottom:1px solid var(--spark-dim); transition:border-color .2s;}
+  .plate-item a:hover{border-color:var(--spark);}
+  .plate-cta{margin-top:40px; display:flex; gap:16px; flex-wrap:wrap;}
+
+  footer{
+    padding:40px 5vw; display:flex; justify-content:space-between; flex-wrap:wrap; gap:16px;
+    color:var(--steel-700); font-family:'IBM Plex Mono', monospace; font-size:0.78rem;
+    border-top:1px solid var(--steel-800);
+  }
+
+  @media (max-width:840px){
+    nav{display:none;}
+    .about-wrap{grid-template-columns:1fr;}
+    .plate-grid{grid-template-columns:1fr;}
+    .plate{padding:40px 26px;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+
+  /* v2 additions */
+  h1 .accent{
+    background:linear-gradient(100deg, var(--spark) 0%, #ffd28a 45%, var(--spark) 100%);
+    background-size:220% auto;
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    animation:sheen 5s linear infinite;
+  }
+  @keyframes sheen{to{background-position:-220% center;}}
+
+  #spark-canvas{position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:1;}
+  .hero{overflow:hidden;}
+  .hero > *:not(#spark-canvas){position:relative; z-index:2;}
+
+  .reveal{opacity:0; transform:translateY(28px); transition:opacity .8s ease, transform .8s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+  .reveal-stagger > *{opacity:0; transform:translateY(22px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal-stagger.in > *{opacity:1; transform:translateY(0);}
+  .reveal-stagger.in > *:nth-child(1){transition-delay:.05s;}
+  .reveal-stagger.in > *:nth-child(2){transition-delay:.15s;}
+  .reveal-stagger.in > *:nth-child(3){transition-delay:.25s;}
+  .reveal-stagger.in > *:nth-child(4){transition-delay:.35s;}
+
+  .product-card{transform-style:preserve-3d; will-change:transform;}
+  .product-card::after{
+    content:''; position:absolute; inset:0; opacity:0; pointer-events:none;
+    background:radial-gradient(180px circle at var(--mx,50%) var(--my,50%), rgba(240,168,60,0.14), transparent 70%);
+    transition:opacity .3s;
+  }
+  .product-card:hover::after{opacity:1;}
+
+  .ticker-wrap{
+    border-top:1px solid var(--steel-800); border-bottom:1px solid var(--steel-800);
+    overflow:hidden; padding:16px 0; background:var(--steel-900);
+  }
+  .ticker{display:flex; gap:60px; white-space:nowrap; width:max-content; animation:scroll-left 22s linear infinite;}
+  .ticker span{font-family:'IBM Plex Mono', monospace; font-size:0.78rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--steel-400); display:flex; align-items:center; gap:10px;}
+  .ticker span::before{content:'◆'; color:var(--spark); font-size:0.6rem;}
+  @keyframes scroll-left{from{transform:translateX(0);} to{transform:translateX(-50%);}}
+
+  .plate{transition:transform .25s ease; transform-style:preserve-3d;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand"><span class="mark"></span>Sterling Metals</div>
+  <nav>
+    <a href="#about">About</a>
+    <a href="#products">Products</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <a href="tel:+919932121000" class="btn btn-ghost" style="padding:10px 18px; font-size:0.75rem;">Call Now</a>
+</header>
+
+<section class="hero diamond-plate">
+  <canvas id="spark-canvas"></canvas>
+  <div class="eyebrow reveal">Delhi &middot; Stainless Steel Distributor</div>
+  <h1 class="reveal">Steel that holds its <span class="accent">shape</span>, its shine, its word.</h1>
+  <p class="hero-sub reveal">Sterling Metals supplies stainless steel sheets, coils and fabricated stock to industry across Delhi NCR — cut, graded and ready to move, from a plant that never closes its gates.</p>
+  <div class="hero-cta reveal">
+    <a href="#contact" class="btn btn-primary">Get Directions →</a>
+    <a href="tel:+919932121000" class="btn btn-ghost">099321 21000</a>
+  </div>
+  <div class="status-row reveal">
+    <div class="status-item"><strong><span class="live-dot"></span>Open 24 Hours</strong>Plant &amp; dispatch, every day</div>
+    <div class="status-item"><strong id="rating-count">0.0 / 5.0</strong>From 4 Google reviews</div>
+    <div class="status-item"><strong>Jahangirpuri</strong>GT Karnal Road industrial belt</div>
+  </div>
+</section>
+
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span>Grade 304 Sheets</span><span>Grade 316 Coils</span><span>Structural Pipes</span><span>Bulk Industrial Supply</span><span>24-Hour Dispatch</span>
+    <span>Grade 304 Sheets</span><span>Grade 316 Coils</span><span>Structural Pipes</span><span>Bulk Industrial Supply</span><span>24-Hour Dispatch</span>
+  </div>
+</div>
+
+<section id="about">
+  <div class="section-head reveal"><span class="section-num">01</span><h2 class="section-title">About the Yard</h2><div class="section-line"></div></div>
+  <div class="about-wrap reveal">
+    <div>
+      <p><strong>Sterling Metals is a stainless steel plant operating out of Rajasthan Udyog Nagar</strong> on GT Karnal Road, supplying industrial and commercial buyers across Delhi with graded stainless material.</p>
+      <p>The facility is built around dependable turnaround: clients come for consistent grades, accurate cuts and stock that's ready when the job needs it — not the other way around. That reliability is what keeps the yard busy around the clock.</p>
+      <p>As a working distributor rather than a showroom, Sterling Metals serves fabricators, contractors and manufacturers who need volume, consistency and a straight answer on lead times.</p>
+    </div>
+    <div class="rating-card">
+      <div class="rating-big" id="rating-big">0.0</div>
+      <div class="stars">★★★★★</div>
+      <p>Based on 4 Google reviews — every client to date has rated the yard's service and material quality at the top mark.</p>
+    </div>
+  </div>
+</section>
+
+<section id="products" class="diamond-plate">
+  <div class="section-head reveal"><span class="section-num">02</span><h2 class="section-title">What Moves Out The Gate</h2><div class="section-line"></div></div>
+  <div class="grid-products reveal-stagger">
+    <div class="product-card">
+      <div class="product-tag">Flat Stock</div>
+      <h3>Sheets &amp; Plates</h3>
+      <p>Stainless sheet and plate cut to size for fabrication, cladding and structural work.</p>
+    </div>
+    <div class="product-card">
+      <div class="product-tag">Coiled Stock</div>
+      <h3>Coils &amp; Strips</h3>
+      <p>Coil stock for continuous processing lines and roll-formed component manufacturing.</p>
+    </div>
+    <div class="product-card">
+      <div class="product-tag">Round Stock</div>
+      <h3>Pipes &amp; Tubes</h3>
+      <p>Structural and process-grade tube for railings, machinery frames and piping runs.</p>
+    </div>
+    <div class="product-card">
+      <div class="product-tag">Bulk Supply</div>
+      <h3>Industrial Orders</h3>
+      <p>Volume supply agreements for manufacturers with recurring stainless steel needs.</p>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="plate-section">
+  <div class="section-head reveal"><span class="section-num">03</span><h2 class="section-title">Find The Yard</h2><div class="section-line"></div></div>
+  <div class="plate reveal" id="plate-el">
+    <span class="rivet tl"></span><span class="rivet tr"></span><span class="rivet bl"></span><span class="rivet br"></span>
+    <div class="plate-eyebrow">Nameplate &middot; Sterling Metals</div>
+    <div class="plate-grid">
+      <div class="plate-item">
+        <h4>Address</h4>
+        <div>Plot No-24, GT Karnal Rd,<br>Rajasthan Udyog Nagar, Jahangirpuri,<br>Delhi, 110033</div>
+      </div>
+      <div class="plate-item">
+        <h4>Phone</h4>
+        <div><a href="tel:+919932121000">099321 21000</a></div>
+      </div>
+      <div class="plate-item">
+        <h4>Hours</h4>
+        <div><span class="live-dot"></span>Open 24 Hours</div>
+      </div>
+      <div class="plate-item">
+        <h4>Rating</h4>
+        <div>5.0 — 4 Google Reviews</div>
+      </div>
+    </div>
+    <div class="plate-cta">
+      <a class="btn btn-primary" target="_blank" href="https://www.google.com/maps/search/?api=1&query=Sterling+Metals+Plot+No-24+GT+Karnal+Rd+Rajasthan+Udyog+Nagar+Jahangirpuri+Delhi+110033">Open in Maps →</a>
+      <a class="btn btn-ghost" href="tel:+919932121000">Call 099321 21000</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Sterling Metals, Delhi</span>
+  <span>Jahangirpuri, GT Karnal Road</span>
+</footer>
+
+<script>
+  // Scroll reveal
+  const revealEls = document.querySelectorAll('.reveal, .reveal-stagger');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, {threshold:0.15});
+  revealEls.forEach(el=>io.observe(el));
+
+  // Animated rating counters
+  function animateCount(el, target, decimals){
+    let start = 0; const dur = 1400; const t0 = performance.now();
+    function step(t){
+      const p = Math.min((t - t0)/dur, 1);
+      const eased = 1 - Math.pow(1-p, 3);
+      const val = (start + (target-start)*eased).toFixed(decimals);
+      el.textContent = decimals ? val : Math.round(val);
+      if(p<1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  }
+  const ratingBig = document.getElementById('rating-big');
+  const ratingCount = document.getElementById('rating-count');
+  const heroStatus = document.querySelector('.status-row');
+  let countStarted = false;
+  const countObserver = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting && !countStarted){
+        countStarted = true;
+        if(ratingBig){
+          let v=0; const dur=1400; const t0=performance.now();
+          function s(t){ const p=Math.min((t-t0)/dur,1); const eased=1-Math.pow(1-p,3); ratingBig.textContent=(eased*5).toFixed(1); if(p<1) requestAnimationFrame(s); }
+          requestAnimationFrame(s);
+        }
+      }
+    });
+  }, {threshold:0.4});
+  if(ratingBig) countObserver.observe(ratingBig);
+
+  let heroCountStarted = false;
+  const heroObserver = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting && !heroCountStarted){
+        heroCountStarted = true;
+        if(ratingCount){
+          let t0=performance.now(); const dur=1200;
+          function s(t){ const p=Math.min((t-t0)/dur,1); const eased=1-Math.pow(1-p,3); ratingCount.textContent=(eased*5).toFixed(1)+' / 5.0'; if(p<1) requestAnimationFrame(s); }
+          requestAnimationFrame(s);
+        }
+      }
+    });
+  }, {threshold:0.4});
+  if(heroStatus) heroObserver.observe(heroStatus);
+
+  // Product card tilt + glow-follow
+  document.querySelectorAll('.product-card').forEach(card=>{
+    card.addEventListener('mousemove', (e)=>{
+      const r = card.getBoundingClientRect();
+      const x = e.clientX - r.left, y = e.clientY - r.top;
+      card.style.setProperty('--mx', x+'px');
+      card.style.setProperty('--my', y+'px');
+    });
+  });
+
+  // Plate subtle 3D tilt
+  const plateEl = document.getElementById('plate-el');
+  if(plateEl){
+    plateEl.addEventListener('mousemove', (e)=>{
+      const r = plateEl.getBoundingClientRect();
+      const px = (e.clientX - r.left)/r.width - 0.5;
+      const py = (e.clientY - r.top)/r.height - 0.5;
+      plateEl.style.transform = `rotateY(${px*4}deg) rotateX(${-py*4}deg)`;
+    });
+    plateEl.addEventListener('mouseleave', ()=>{ plateEl.style.transform = 'rotateY(0) rotateX(0)'; });
+  }
+
+  // Spark particle canvas in hero (welding-spark motif)
+  const canvas = document.getElementById('spark-canvas');
+  if(canvas && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    const ctx = canvas.getContext('2d');
+    let w,h,particles=[];
+    function resize(){
+      const hero = canvas.parentElement;
+      w = canvas.width = hero.offsetWidth;
+      h = canvas.height = hero.offsetHeight;
+    }
+    function makeParticle(){
+      return {
+        x: Math.random()*w,
+        y: h + 10,
+        vx: (Math.random()-0.5)*0.6,
+        vy: -(0.6 + Math.random()*1.4),
+        r: 1 + Math.random()*1.8,
+        life: 0,
+        maxLife: 120 + Math.random()*160,
+        hue: Math.random()<0.7 ? '240,168,60' : '255,210,138'
+      };
+    }
+    resize();
+    for(let i=0;i<40;i++){ const p = makeParticle(); p.y = Math.random()*h; particles.push(p); }
+    window.addEventListener('resize', resize);
+    function tick(){
+      ctx.clearRect(0,0,w,h);
+      particles.forEach(p=>{
+        p.x += p.vx; p.y += p.vy; p.vy -= 0.001; p.life++;
+        const fade = 1 - p.life/p.maxLife;
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(${p.hue},${Math.max(fade,0)*0.85})`;
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+        ctx.fill();
+      });
+      particles = particles.filter(p=>p.life < p.maxLife && p.y > -20);
+      while(particles.length < 40){ particles.push(makeParticle()); }
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+</script>
+</body>
+</html>
